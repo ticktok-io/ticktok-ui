@@ -1,6 +1,6 @@
 {
   "name": "ticktok-dashboard",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Dashboard for Ticktok.io server",
   "repository": {
     "type": "git",
@@ -11,6 +11,7 @@
   "bugs": {
     "url": "https://github.com/ticktok-io/ticktok-ui/issues"
   },
+  "files": ["src", "test", "public"],
   "scripts": {
     "start": "react-scripts start",
     "prebuild": "CI=test npm run test",
