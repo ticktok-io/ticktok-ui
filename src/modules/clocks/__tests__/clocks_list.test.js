@@ -1,7 +1,7 @@
 import React from 'react';
 import ClocksList from "../clocks_list";
-import {cleanup, render, wait, fireEvent} from "react-testing-library";
-import "jest-dom/extend-expect"
+import {cleanup, render, wait, fireEvent} from "@testing-library/react";
+import "@testing-library/jest-dom/extend-expect"
 import axios from 'axios';
 import MockAdapter from "axios-mock-adapter";
 import {createAppStore} from "../../../store";

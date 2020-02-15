@@ -39,7 +39,7 @@ jobs:
       - *attach-workspace
       - run:
           name: Unit tests
-          command: npm test
+          command: CI=true npm test
 
   build:
     <<: *defaults
