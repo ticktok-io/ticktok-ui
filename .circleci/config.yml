@@ -50,6 +50,7 @@ jobs:
           command: PUBLIC_URL=' ' npm run build
       - persist_to_workspace:
           root: ~/repo
+          paths: .
 
   deploy:
     <<: *defaults
@@ -87,3 +88,4 @@ workflows:
               ignore: /.*/
             tags:
               only: /^v.*/
+              
