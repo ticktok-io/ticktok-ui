@@ -69,10 +69,14 @@ workflows:
   version: 2
   ticktok-ui-npm:
     jobs:
-      - install
+      - install:
+          tags:
+            only: /^v.*/
       - test:
           requires:
             - install
+          tags:
+            only: /^v.*/
       - build:
           requires:
             - install
