@@ -70,13 +70,15 @@ workflows:
   ticktok-ui-npm:
     jobs:
       - install:
-          tags:
-            only: /^v.*/
+          filters:
+            tags:
+              only: /^v.*/
       - test:
           requires:
             - install
-          tags:
-            only: /^v.*/
+          filters:
+            tags:
+              only: /^v.*/
       - build:
           requires:
             - install
