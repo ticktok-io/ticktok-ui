@@ -2,14 +2,62 @@ version: 2
 
 defaults: &defaults
   working_directory: ~/repo
+  docker:
+    - image: circleci/node:12
+
+fast-checkout: &attach-workspace
+  attach_workspace:
+    at: ~/repo
 
 jobs:
+  install:
+    <<: *defaults
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+            # when lock file changes, use increasingly general patterns to restore cache
+            - node-v1-{{ .Branch }}-{{ checksum "package-lock.json" }}
+            - node-v1-{{ .Branch }}-
+            - node-v1-
+
+      - run: npm ci
+
+      - save_cache:
+          paths:
+            - node_modules  # location depends on npm version
+          key: node-v1-{{ .Branch }}-{{ checksum "package-lock.json" }}
+
+      - persist_to_workspace:
+          root: ~/repo
+          paths: .
+
+  test:
+    <<: *defaults
+    steps:
+      - *attach-workspace
+      - run:
+          name: Unit tests
+          command: CI=true npm test
+
+  build:
+    <<: *defaults
+    steps:
+      - *attach-workspace
+      - run:
+          name: Build Dashboard
+          command: PUBLIC_URL=' ' npm run build
+      - persist_to_workspace:
+          root: ~/repo
+          paths: .
+
   deploy:
     <<: *defaults
     docker:
       - image: circleci/node:8
     steps:
-      - checkout
+      - *attach-workspace
       - run:
           name: Authenticate with registry
           command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/repo/.npmrc
@@ -19,6 +67,27 @@ jobs:
 
 workflows:
   version: 2
-  ticktok-npm:
+  ticktok-ui-npm:
     jobs:
-      - deploy
+      - install
+      - test:
+          requires:
+            - install
+      - build:
+          requires:
+            - install
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v.*/
+      - deploy:
+          requires:
+            - test
+            - build
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v.*/
+
