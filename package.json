@@ -11,6 +11,7 @@
   "bugs": {
     "url": "https://github.com/ticktok-io/ticktok-ui/issues"
   },
+  "files": ["build"],
   "scripts": {
     "start": "react-scripts start",
     "prebuild": "CI=test npm run test",
