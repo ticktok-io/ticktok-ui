@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  ticktok:
+    image: ticktok/ticktok
+    ports:
+      - 9643:9643
+    environment:
+      - CLOCKS_PURGE_INTERVAL=4000
+      - SCHEDULES_PURGE_INTERVAL=250
+      - TICKS_PURGE_INTERVAL=500
+      - TICKS_PURGE_KEEPCOUNT=1
+
+
