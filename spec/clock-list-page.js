@@ -1,12 +1,34 @@
 const browser = require('./browser')
+const assert = require('assert');
 
-const clockNamed = async(name) => {
-  const row = await browser.page().$x(`//tr[td//text()[contains(., '${name}')]]`)
+const clockNamed = (name) => {
+  return new ClockRow(name)
+}
 
-  return browser.page().evaluate(row => {
-    const tds = [...row.getElementsByTagName('td')]
-    return { name: tds[0].textContent, schedule: tds[1].textContent }
-  }, row[0])
+class ClockRow {
+  constructor(name) {
+    this.name = name
+  }
+
+  async schedule() {
+    const row = await browser.page().waitForXPath(`//tr[td//text()[contains(., '${this.name}')]]`)
+    return browser.page().evaluate(row => {
+      const tds = [...row.getElementsByTagName('td')]
+      return tds[1].textContent
+    }, row)
+  }
+
+  async click(button) {
+    const row = await browser.page().waitForXPath(`//tr[td//text()[contains(., '${this.name}')]]`)
+    const buttonElement = await row.$(`button[name='${button}']`)
+    assert(buttonElement != null, `Button '${button}' not found`)
+    return buttonElement.click()
+  }
+
+  async hasAction(actionName) {
+    return browser.page().waitForXPath(
+      `//tr[td//text()[contains(., '${this.name}')] and td//button[name()='${actionName}']]`)
+  }
 }
 
 module.exports = {
