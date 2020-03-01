@@ -22,10 +22,13 @@ describe('Clock list', () => {
 
   it('should pause a clock', async() => {
     const clockName = 'to be paused'
-    await this.ticktok.schedule({ name: clockName, schedule: 'every.10.seconds' }, () => {})
-    await clockNamed(clockName).click('pause')
-    await clockNamed(clockName).hasAction('resume')
-    await clockNamed(clockName).click('resume') // We need to make it active otherwise it wont get deleted
+    try {
+      await this.ticktok.schedule({ name: clockName, schedule: 'every.10.seconds' }, () => {})
+      await clockNamed(clockName).click('pause')
+      await clockNamed(clockName).hasAction('resume')
+    } finally {
+      await clockNamed(clockName).click('resume') // Restoring clock state
+    }
   })
 
   after('close browser', async() => {

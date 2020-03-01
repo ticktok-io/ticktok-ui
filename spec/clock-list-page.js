@@ -27,7 +27,7 @@ class ClockRow {
 
   async hasAction(actionName) {
     return browser.page().waitForXPath(
-      `//tr[td//text()[contains(., '${this.name}')] and td//button[name()='${actionName}']]`)
+      `//tr[td//text()[contains(., '${this.name}')] and td//button[@name='${actionName}']]`)
   }
 }
 
