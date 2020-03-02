@@ -34,6 +34,7 @@ jobs:
           paths: .
 
   test:
+    working_directory: ~/repo
     docker:
       - image: circleci/node:12
       - image: ticktok/ticktok:master
