@@ -49,9 +49,11 @@ jobs:
           command: docker-compose up -d && sleep 15
       - run:
           name: Start UI
-          command: |
-            npm start &
-            sleep 5
+          command: npm start
+          background: true
+      - run:
+          name: wait for UI to be ready
+          command: sleep 10
       - run:
           name: Specification tests
           command: npm run ci-spec
