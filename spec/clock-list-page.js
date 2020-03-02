@@ -23,7 +23,7 @@ class ClockRow {
   }
 
   async click(button) {
-    const row = await browser.page().waitForXPath(`//tr[td//text()[contains(., '${this.name}')]]`)
+    const row = await this.rowElement()
     const buttonElement = await row.$(`button[name='${button}']`)
     assert(buttonElement != null, `Button '${button}' not found`)
     return buttonElement.click()
