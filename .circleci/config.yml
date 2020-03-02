@@ -48,6 +48,9 @@ jobs:
           name: Start ticktok.io
           command: docker-compose up -d && sleep 15
       - run:
+          name: Start UI
+          command: npm start & && sleep 2
+      - run:
           name: Specification tests
           command: npm run ci-spec
       - store_artifacts:
