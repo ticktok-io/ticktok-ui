@@ -56,7 +56,7 @@ jobs:
           command: sleep 10
       - run:
           name: Specification tests
-          command: npm run ci-spec
+          command: npm run spec
       - store_artifacts:
           path: screenshots
       - store_test_results:
