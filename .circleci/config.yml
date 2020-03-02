@@ -41,7 +41,7 @@ jobs:
       - *attach-workspace
       - run:
           name: Unit tests
-          command: CI=true npm test
+          command: pwd && CI=true npm test
       - run:
           name: Specification tests
           command: npm run ci-spec
