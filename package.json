@@ -19,7 +19,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "ci-spec": "HEADLESS=true MOCHA_FILE=./test-results/mocha/results.xml mocha spec --timeout 5000 --exit --reporter mocha-junit-reporter --file spec/intercept-failures.js",
+    "ci-spec": "HEADLESS=true MOCHA_FILE=./test-results/mocha/results.xml mocha spec --timeout 20000 --exit --reporter mocha-junit-reporter --file spec/intercept-failures.js",
     "eject": "react-scripts eject"
   },
   "proxy": "http://localhost:9643",
