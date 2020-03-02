@@ -1,5 +1,5 @@
 const browser = require('./browser')
-const assert = require('assert');
+const assert = require('assert')
 
 const clockNamed = (name) => {
   return new ClockRow(name)
@@ -11,11 +11,15 @@ class ClockRow {
   }
 
   async schedule() {
-    const row = await browser.page().waitForXPath(`//tr[td//text()[contains(., '${this.name}')]]`)
+    const row = await this.rowElement()
     return browser.page().evaluate(row => {
       const tds = [...row.getElementsByTagName('td')]
       return tds[1].textContent
     }, row)
+  }
+
+  async rowElement() {
+    return browser.page().waitForXPath(`//tr[td//text()[contains(., '${this.name}')]]`)
   }
 
   async click(button) {

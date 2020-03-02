@@ -34,12 +34,21 @@ jobs:
           paths: .
 
   test:
-    <<: *defaults
+    docker:
+      - image: circleci/node:12
+      - image: ticktok/ticktok:master
     steps:
       - *attach-workspace
       - run:
           name: Unit tests
           command: CI=true npm test
+      - run:
+          name: Specification tests
+          command: npm run ci-spec
+      - store_artifacts:
+          path: screenshots
+      - store_test_results:
+          path: test-results
 
   build:
     <<: *defaults

@@ -31,6 +31,11 @@ describe('Clock list', () => {
     }
   })
 
+  it('should manually tick a clock', (done) => {
+    this.ticktok.schedule({ name: 'manual clock', schedule: '@never' }, () => { done() })
+    clockNamed('manual clock').click('tick')
+  })
+
   after('close browser', async() => {
     this.ticktok.disconnect()
     await browser.close()

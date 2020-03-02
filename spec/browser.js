@@ -1,4 +1,5 @@
 const puppeteer = require('puppeteer')
+var fs = require('fs')
 
 const headless = process.env.HEADLESS || false
 const slowMo = process.env.SLOW_MO || 5
@@ -37,6 +38,14 @@ const page = () => {
   return currentPage
 }
 
+const takeScreenshot = async(name) => {
+  const dir = 'screenshots'
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir)
+  }
+  await currentPage.screenshot({ path: `${dir}/${name} - ${Date.now()}.jpeg` })
+}
+
 const close = async() => {
   await currentPage.close()
   await browser.close()
@@ -47,5 +56,6 @@ module.exports = {
   visitHomePage,
   visit,
   page,
-  close
+  close,
+  takeScreenshot
 }
