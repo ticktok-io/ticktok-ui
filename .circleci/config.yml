@@ -1,7 +1,4 @@
-version: 2.1
-
-orbs:
-  puppeteer: threetreeslight/puppeteer@0.1.2
+version: 2
 
 defaults: &defaults
   working_directory: ~/repo
@@ -38,16 +35,18 @@ jobs:
 
   test:
     working_directory: ~/repo
-    docker:
-      - image: circleci/node:12
-        environment:
-          NODE_ENV: development
-      - image: ticktok/ticktok:master
+    machine: true
     steps:
       - *attach-workspace
       - run:
+          name: Install node@v12.14.0
+          command: .circleci/upgrade_node.sh
+      - run:
           name: Unit tests
-          command: pwd && CI=true npm test
+          command: CI=true npm test
+      - run:
+          name: Start ticktok.io
+          command: docker-compose up -d && sleep 15
       - run:
           name: Specification tests
           command: npm run ci-spec
