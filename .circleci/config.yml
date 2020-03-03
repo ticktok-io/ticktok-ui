@@ -34,12 +34,33 @@ jobs:
           paths: .
 
   test:
-    <<: *defaults
+    working_directory: ~/repo
+    machine: true
     steps:
       - *attach-workspace
       - run:
+          name: Install node@v12.14.0
+          command: .circleci/upgrade_node.sh
+      - run:
           name: Unit tests
           command: CI=true npm test
+      - run:
+          name: Start ticktok.io
+          command: docker-compose up -d && sleep 15
+      - run:
+          name: Start UI
+          command: npm start
+          background: true
+      - run:
+          name: wait for UI to be ready
+          command: sleep 10
+      - run:
+          name: Specification tests
+          command: npm run spec
+      - store_artifacts:
+          path: screenshots
+      - store_test_results:
+          path: test-results
 
   build:
     <<: *defaults
@@ -83,8 +104,6 @@ workflows:
           requires:
             - install
           filters:
-            branches:
-              ignore: /.*/
             tags:
               only: /^v.*/
       - deploy:
