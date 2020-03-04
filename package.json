@@ -13,7 +13,8 @@
   },
   "files": [
     "build",
-    "spec"
+    "spec",
+    "package-lock.json"
   ],
   "scripts": {
     "start": "react-scripts start",
