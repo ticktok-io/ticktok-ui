@@ -2,7 +2,7 @@ version: '3'
 
 services:
   ticktok:
-    image: ticktok/ticktok:master
+    image: ${TICKTOK_IMAGE:-ticktok/ticktok:master}
     ports:
       - 9643:9643
     environment:

@@ -11,10 +11,15 @@
   "bugs": {
     "url": "https://github.com/ticktok-io/ticktok-ui/issues"
   },
+  "engines": {
+    "node": "12.14.0",
+    "npm": "^6.13"
+  },
   "files": [
     "build",
     "spec",
-    "package-lock.json"
+    "package-lock.json",
+    "docker-compose.yml"
   ],
   "scripts": {
     "start": "react-scripts start",
@@ -27,6 +32,7 @@
   "dependencies": {
     "axios": "^0.19.2",
     "lodash": "^4.17.15",
+    "mime": "^2.4.4",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-redux": "^5.1.1",
