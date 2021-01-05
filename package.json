@@ -30,7 +30,7 @@
   },
   "proxy": "http://localhost:9643",
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "lodash": "^4.17.15",
     "mime": "^2.4.4",
     "react": "^16.7.0",
